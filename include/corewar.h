@@ -26,6 +26,36 @@ typedef struct list {
     struct node *head;
 } list_t;
 
+typedef struct champ_s {
+    unsigned int magic_number;
+    char prog_name[PROG_NAME_LENGTH + 1];
+    unsigned int prog_size;
+    char *code;
+    unsigned int wait_cycle;
+    unsigned int pc;
+    int status;
+    int rem;
+    unsigned int nbr_live;
+    int pos;
+    int id;
+    args_type_t type[MAX_ARGS_NUMBER];
+    struct champ_s *next;
+} champ_t;
+
+typedef struct {
+    unsigned int cycle_alive;
+    int last_alive;
+    int nb_robot;
+    champ_t *champions;
+} prog_t;
+
+typedef int (*cmd_func_t)(prog_t *, champ_t *, unsigned char *);
+
+typedef struct {
+    char *name;
+    cmd_func_t func;
+} cmd_t;
+
 /*    LIB STR    */
 int my_strlen(const char *);
 int my_strcmp(const char *, const char *);
@@ -61,9 +91,21 @@ int free_node(node_t *);
 /*    OTHER LIB FUNCTIONS    */
 int mini_printf(int, const char *, ...);
 int my_free(void *);
+unsigned int swap_end_color_4(unsigned int num);
 
 /*    UTILS FUNCTIONS    */
+int get_type(int *i, champ_t *cur, unsigned char *buffer);
+int init_champ(prog_t *prog, unsigned char *buffer);
+int update_pc(champ_t *cur);
+int convert_int(unsigned char *buffer, champ_t *cur);
+void **get_args(champ_t *cur, unsigned char *buffer);
 
 /*    PROJECT'S MAIN FUNCTIONS    */
+int game_loop(prog_t *prog, unsigned char *buffer);
+int exec_cmd(champ_t *cur, prog_t *prog, unsigned char *buffer);
+int add_champ(FILE *fd, prog_t *prog, int id);
+
+/*      CMD       */
+int live(prog_t *prog, champ_t *cur, unsigned char *buffer);
 
 #endif

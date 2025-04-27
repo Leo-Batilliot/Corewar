@@ -9,8 +9,20 @@
 OBJ_DIR = obj
 
 # FILES
-SRC = 	src/main.c 		\
-		src/utils/op.c 	\
+SRC = 	src/main.c 					\
+		lib/my_strcmp.c 			\
+		lib/my_strlen.c 			\
+		src/utils/get_type.c 		\
+		src/utils/op.c 				\
+		src/utils/init_champ.c 		\
+		src/utils/update_pc.c 		\
+		src/exec_cmd.c 				\
+		src/game_loop.c 			\
+		src/utils/convert_type.c 	\
+		lib/swap_end_color.c 		\
+		src/cmd/live.c 				\
+		src/utils/get_args.c 		\
+		lib/mini_printf.c 			\
 
 # COLORS
 RED=\033[31m

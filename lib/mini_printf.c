@@ -4,7 +4,10 @@
 ** File description:
 ** mini print f
 */
-#include "my.h"
+
+#include "corewar.h"
+#include <stdarg.h>
+#include <unistd.h>
 
 void my_putchar(int output, char c)
 {
