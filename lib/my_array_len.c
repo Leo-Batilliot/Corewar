@@ -4,7 +4,6 @@
 ** File description:
 ** my_array_len
 */
-#include "my.h"
 
 int my_array_len(const void **array)
 {

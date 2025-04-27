@@ -4,7 +4,7 @@
 ** File description:
 ** my_strcmp
 */
-#include "my.h"
+#include "corewar.h"
 
 int my_strcmp(const char *str1, const char *str2)
 {
