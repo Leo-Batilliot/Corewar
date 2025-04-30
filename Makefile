@@ -9,9 +9,11 @@
 OBJ_DIR = obj
 
 # FILES
-SRC = 	src/main.c 					\
+SRC = 	lib/mini_printf.c 			\
 		lib/my_strcmp.c 			\
 		lib/my_strlen.c 			\
+		lib/my_atoi.c 				\
+		lib/swap_end_color.c 		\
 		src/utils/get_type.c 		\
 		src/utils/op.c 				\
 		src/utils/init_champ.c 		\
@@ -19,10 +21,10 @@ SRC = 	src/main.c 					\
 		src/exec_cmd.c 				\
 		src/game_loop.c 			\
 		src/utils/convert_type.c 	\
-		lib/swap_end_color.c 		\
 		src/cmd/live.c 				\
 		src/utils/get_args.c 		\
-		lib/mini_printf.c 			\
+		src/utils/handle_flags.c 	\
+		src/main.c 					\
 
 # COLORS
 RED=\033[31m
@@ -79,4 +81,4 @@ tests_run:
 	@echo -e "$(WHITE)$(BOLD)\t[TESTS...]$(RESET)"
 
 debug: CFLAGS += -g
-debug: all
+debug: re

@@ -13,7 +13,8 @@ int init_champ(prog_t *prog, unsigned char *buffer)
     int k = 0;
 
     for (champ_t *tmp = prog->champions; tmp; tmp = tmp->next) {
-        tmp->pos = (MEM_SIZE / prog->nb_robot) * k;
+        if (tmp->pos == -1)
+            tmp->pos = (MEM_SIZE / prog->nb_robot) * k;
         k++;
         tmp->pc = tmp->pos;
         for (unsigned int i = 0; i < tmp->prog_size; i++)
@@ -22,14 +23,17 @@ int init_champ(prog_t *prog, unsigned char *buffer)
     return 0;
 }
 
-static int declare_pos(champ_t *new_prog, int id)
+static int declare_pos(champ_t *new_prog, int id, int load_adress)
 {
     new_prog->wait_cycle = 0;
     new_prog->pc = 0;
     new_prog->status = 0;
     new_prog->rem = 0;
     new_prog->nbr_live = 0;
-    new_prog->pos = 0;
+    if (load_adress == -1)
+        new_prog->pos = -1;
+    else
+        new_prog->pos = load_adress;
     new_prog->id = id;
     return 0;
 }
@@ -78,18 +82,22 @@ void add_to_end(prog_t *prog, champ_t *new_prog)
     prog->nb_robot++;
 }
 
-int add_champ(FILE *fd, prog_t *prog, int id)
+int add_champ(FILE *fd, prog_t *prog, int load_adress)
 {
     champ_t *new_prog = malloc(sizeof(champ_t));
+    static int id = 1;
 
-    if (!new_prog)
-        return 84;
-    if (read_champ_info(fd, new_prog) == 84)
+    if (!new_prog || read_champ_info(fd, new_prog) == 84)
         return 84;
     if (read_champ_code(fd, new_prog) == 84)
         return 84;
-    declare_pos(new_prog, id);
+    declare_pos(new_prog, id, load_adress);
     new_prog->next = NULL;
+    if (new_prog->magic_number != COREWAR_EXEC_MAGIC) {
+        mini_printf(2, "The magic is incorrect.\n");
+        return 84;
+    }
     add_to_end(prog, new_prog);
+    id++;
     return 0;
 }
