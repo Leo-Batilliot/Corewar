@@ -105,6 +105,8 @@ int game_loop(prog_t *prog, unsigned char *buffer);
 int exec_cmd(champ_t *cur, prog_t *prog, unsigned char *buffer);
 int add_champ(FILE *fd, prog_t *prog, int id);
 
+int flags_a(int *load_adress, char **av, int *i);
+
 /*      CMD       */
 int live(prog_t *prog, champ_t *cur, unsigned char *buffer);
 
