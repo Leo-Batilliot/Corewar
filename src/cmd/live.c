@@ -7,8 +7,9 @@
 
 #include "corewar.h"
 #include "op.h"
+#include <stddef.h>
 
-champ_t *find_node(prog_t *prog, int id_to_find)
+champ_t *find_node(corewar_t *prog, int id_to_find)
 {
     for (champ_t *tmp = prog->champions; tmp; tmp = tmp->next) {
         if (tmp->id == id_to_find)
@@ -17,21 +18,21 @@ champ_t *find_node(prog_t *prog, int id_to_find)
     return NULL;
 }
 
-int live(prog_t *prog, champ_t *cur, unsigned char *buffer)
+int live(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);
-    champ_t *find = NULL;
+    champ_t *champ = NULL;
 
     if (!args)
         return 84;
-    find = find_node(prog, *((int *)args[0]));
-    if (!find)
-        return 0;
+    champ = find_node(prog, *((int *)args[0]));
+    if (!champ)
+        return free_array(args);
     else {
         mini_printf(1, "The player %i(%s)is alive.\n",
-            find->id, find->prog_name);
-        find->nbr_live++;
-        prog->last_alive = find->id;
+            champ->id, champ->prog_name);
+        champ->nbr_live++;
+        prog->last_alive = champ->id;
     }
-    return 0;
+    return free_array(args);
 }
