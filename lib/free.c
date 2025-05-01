@@ -4,7 +4,8 @@
 ** File description:
 ** free_array
 */
-#include "my.h"
+
+#include "stdlib.h"
 
 int my_free(void *ptr)
 {

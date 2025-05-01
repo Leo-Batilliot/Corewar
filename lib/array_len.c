@@ -5,7 +5,7 @@
 ** my_array_len
 */
 
-int my_array_len(const void **array)
+int array_len(const void **array)
 {
     int res = 0;
 

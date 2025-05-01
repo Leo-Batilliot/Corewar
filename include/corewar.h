@@ -9,11 +9,6 @@
     #define LIB_H
     #include "op.h"
     /*    LIB    */
-    #include <stdlib.h>
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <unistd.h>
-    #include <stdarg.h>
     /*    PROJECT LIBS    */
 
 typedef struct node {
@@ -46,10 +41,19 @@ typedef struct {
     unsigned int cycle_alive;
     int last_alive;
     int nb_robot;
+    int dump;
     champ_t *champions;
-} prog_t;
+} corewar_t;
 
-typedef int (*cmd_func_t)(prog_t *, champ_t *, unsigned char *);
+typedef struct {
+    int address;
+    int dump;
+    int id;
+    char **array;
+    int index;
+} flags_t;
+
+typedef int (*cmd_func_t)(corewar_t *, champ_t *, unsigned char *);
 
 typedef struct {
     char *name;
@@ -65,6 +69,7 @@ char *array_to_str(const char **, char);
 char *my_strcat(const char *, const char *, const char *);
 int my_strncpy(const char *, const char *, int);
 char *str_lowcase(char *);
+int array_len(const void **);
 int is_bool(const char *);
 
 /*    LIB ARRAY    */
@@ -74,7 +79,7 @@ int my_array_len(const void **);
 int total_array_len(const char **);
 
 /*    LIB NUMBER    */
-int my_atoi(const char *);
+int my_atoi(const char *, int *);
 int is_unsigned_int(const char *);
 int is_negative_int(const char *);
 int is_float(const char *str);
@@ -93,21 +98,33 @@ int mini_printf(int, const char *, ...);
 int my_free(void *);
 unsigned int swap_end_color_4(unsigned int num);
 
+
+
+
+/*    INIT    */
+corewar_t *init_main_struct(void);
+flags_t *init_flags(char **);
+champ_t *init_champion(int, flags_t *);
+
+/*    FREE    */
+int free_champion(champ_t *);
+int free_corewar(corewar_t *);
+
 /*    UTILS FUNCTIONS    */
 int get_type(int *i, champ_t *cur, unsigned char *buffer);
-int init_champ(prog_t *prog, unsigned char *buffer);
+int set_champions_positions(corewar_t *prog, unsigned char *buffer);
 int update_pc(champ_t *cur);
 int convert_int(unsigned char *buffer, champ_t *cur);
 void **get_args(champ_t *cur, unsigned char *buffer);
 
 /*    PROJECT'S MAIN FUNCTIONS    */
-int game_loop(prog_t *prog, unsigned char *buffer);
-int exec_cmd(champ_t *cur, prog_t *prog, unsigned char *buffer);
-int add_champ(FILE *fd, prog_t *prog, int id);
-
-int flags_a(int *load_adress, char **av, int *i);
+corewar_t *parsing_main(char **);
+int game_loop(corewar_t *prog, unsigned char *buffer);
+int exec_cmd(champ_t *cur, corewar_t *prog, unsigned char *buffer);
+int handle_flags(flags_t *flags);
+int parse_champion_file(corewar_t *, flags_t *);
 
 /*      CMD       */
-int live(prog_t *prog, champ_t *cur, unsigned char *buffer);
+int live(corewar_t *prog, champ_t *cur, unsigned char *buffer);
 
 #endif

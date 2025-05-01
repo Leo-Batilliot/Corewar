@@ -14,16 +14,21 @@ SRC = 	lib/mini_printf.c 			\
 		lib/my_strlen.c 			\
 		lib/my_atoi.c 				\
 		lib/swap_end_color.c 		\
+		lib/array_len.c 			\
+		lib/free.c 					\
 		src/utils/get_type.c 		\
 		src/utils/op.c 				\
-		src/utils/init_champ.c 		\
+		src/utils/champions.c 		\
 		src/utils/update_pc.c 		\
-		src/exec_cmd.c 				\
-		src/game_loop.c 			\
+		src/utils/init.c 			\
+		src/utils/free.c 			\
 		src/utils/convert_type.c 	\
-		src/cmd/live.c 				\
 		src/utils/get_args.c 		\
-		src/utils/handle_flags.c 	\
+		src/utils/flags.c 			\
+		src/game_loop.c 			\
+		src/cmd/live.c 				\
+		src/exec_cmd.c 				\
+		src/parsing.c 				\
 		src/main.c 					\
 
 # COLORS
