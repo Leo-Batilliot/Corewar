@@ -3,6 +3,8 @@
 
 **/*.vscode
 
+**/*.cor
+
 #Project Specific
 tests
 corewar

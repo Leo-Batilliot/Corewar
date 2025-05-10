@@ -33,6 +33,7 @@ typedef struct champ_s {
     unsigned int nbr_live;
     int pos;
     int id;
+    int registre[REG_NUMBER];
     args_type_t type[MAX_ARGS_NUMBER];
     struct champ_s *next;
 } champ_t;
@@ -115,16 +116,18 @@ int get_type(int *i, champ_t *cur, unsigned char *buffer);
 int set_champions_positions(corewar_t *prog, unsigned char *buffer);
 int update_pc(champ_t *cur);
 int convert_int(unsigned char *buffer, champ_t *cur);
-void **get_args(champ_t *cur, unsigned char *buffer);
+void **get_args(champ_t *, unsigned char *);
 
 /*    PROJECT'S MAIN FUNCTIONS    */
 corewar_t *parsing_main(char **);
-int game_loop(corewar_t *prog, unsigned char *buffer);
-int exec_cmd(champ_t *cur, corewar_t *prog, unsigned char *buffer);
-int handle_flags(flags_t *flags);
+int game_loop(corewar_t *, unsigned char *);
+int exec_cmd(champ_t *, corewar_t *, unsigned char *);
+int handle_flags(flags_t *);
 int parse_champion_file(corewar_t *, flags_t *);
+champ_t *find_node(corewar_t *, int);
+void remove_champion(champ_t **, int, corewar_t *);
 
 /*      CMD       */
-int live(corewar_t *prog, champ_t *cur, unsigned char *buffer);
+int live(corewar_t *, champ_t *, unsigned char *);
 
 #endif

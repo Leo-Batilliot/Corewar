@@ -9,15 +9,6 @@
 #include "op.h"
 #include <stddef.h>
 
-champ_t *find_node(corewar_t *prog, int id_to_find)
-{
-    for (champ_t *tmp = prog->champions; tmp; tmp = tmp->next) {
-        if (tmp->id == id_to_find)
-            return tmp;
-    }
-    return NULL;
-}
-
 int live(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

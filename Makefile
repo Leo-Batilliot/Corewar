@@ -17,6 +17,7 @@ SRC = 	lib/mini_printf.c 			\
 		lib/array_len.c 			\
 		lib/free.c 					\
 		src/utils/get_type.c 		\
+		src/utils/linked_list.c 	\
 		src/utils/op.c 				\
 		src/utils/champions.c 		\
 		src/utils/update_pc.c 		\
