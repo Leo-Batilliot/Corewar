@@ -24,6 +24,9 @@ int set_champions_positions(corewar_t *prog, unsigned char *buffer)
         tmp->pc = tmp->pos;
         for (unsigned int i = 0; i < tmp->prog_size; i++)
             buffer[(tmp->pos + i) % MEM_SIZE] = tmp->code[i];
+        tmp->registre[0] = tmp->id;
+        for (int i = 1; i < REG_NUMBER; i++)
+            tmp->registre[i] = 0;
     }
     return 0;
 }

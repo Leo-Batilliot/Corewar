@@ -8,7 +8,9 @@
 #include "corewar.h"
 #include "op.h"
 #include <stdbool.h>
+#include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 static int update_cycle(champ_t *champion)
 {
@@ -19,10 +21,11 @@ static int update_cycle(champ_t *champion)
     return 0;
 }
 
-int watch_health(champ_t *champion, bool *game_run, corewar_t *corewar)
+int watch_health(champ_t *champion, corewar_t *corewar)
 {
-    if (corewar->cycle_alive == 0 && champion->nbr_live < NBR_LIVE) {
-        (*game_run) = false;
+    if (corewar->cycle_alive == 0 && champion->nbr_live <= 0) {
+        remove_champion(&corewar->champions, champion->registre[0], corewar);
+        return 0;
     }
     if (champion->nbr_live >= NBR_LIVE && corewar->cycle_alive > 0) {
         corewar->cycle_alive -= CYCLE_DELTA;
@@ -41,7 +44,7 @@ static int loop_type(champ_t *champion, unsigned char *buffer)
 }
 
 int execute_each_champ(champ_t *champion, unsigned char *buffer,
-    corewar_t *corewar, bool *game_run)
+    corewar_t *corewar)
 {
     if (update_cycle(champion))
         return 2;
@@ -50,20 +53,26 @@ int execute_each_champ(champ_t *champion, unsigned char *buffer,
             return 1;
     }
     exec_cmd(champion, corewar, buffer);
-    watch_health(champion, game_run, corewar);
+    watch_health(champion, corewar);
     return 0;
 }
 
-int loop_champ(corewar_t *corewar, unsigned char *buffer, bool *game_run)
+int loop_champ(corewar_t *corewar, unsigned char *buffer)
 {
     int res = 0;
+    champ_t *champ = corewar->champions;
+    champ_t *save_next = NULL;
 
-    for (champ_t *champ = corewar->champions; champ; champ = champ->next) {
-        res = execute_each_champ(champ, buffer, corewar, game_run);
-        if (res == 2)
+    while (champ != NULL) {
+        save_next = champ->next;
+        res = execute_each_champ(champ, buffer, corewar);
+        if (res == 2) {
+            champ = save_next;
             continue;
+        }
         if (res == 1)
             break;
+        champ = save_next;
     }
     return 0;
 }
@@ -91,17 +100,32 @@ static int dump(unsigned char *buffer)
     return 0;
 }
 
+static int check_end(corewar_t *corewar, bool *game_run)
+{
+    champ_t *winner = NULL;
+
+    if (corewar->nb_robot <= 1) {
+        winner = find_node(corewar, corewar->last_alive);
+        if (winner) {
+            mini_printf(1, "The player %i", winner->registre[0]);
+            mini_printf(1, "(%s)has won.\n", winner->prog_name);
+        }
+        *game_run = false;
+    }
+    return 0;
+}
+
 int game_loop(corewar_t *corewar, unsigned char *buffer)
 {
     bool game_run = true;
 
     corewar->cycle_alive = CYCLE_TO_DIE;
     for (int cycle = 0; game_run; cycle++) {
-        loop_champ(corewar, buffer, &game_run);
+        loop_champ(corewar, buffer);
+        check_end(corewar, &game_run);
         corewar->cycle_alive--;
         if (cycle == corewar->dump)
             dump(buffer);
     }
-    mini_printf(1, "The player %i () has won.\n", corewar->last_alive);
     return 0;
 }
