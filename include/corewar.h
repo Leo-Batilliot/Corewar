@@ -116,6 +116,7 @@ int get_type(int *i, champ_t *cur, unsigned char *buffer);
 int set_champions_positions(corewar_t *prog, unsigned char *buffer);
 int update_pc(champ_t *cur);
 int convert_int(unsigned char *buffer, champ_t *cur);
+short convert_short(unsigned char *buffer, champ_t *cur);
 void **get_args(champ_t *, unsigned char *);
 
 /*    PROJECT'S MAIN FUNCTIONS    */
@@ -124,10 +125,13 @@ int game_loop(corewar_t *, unsigned char *);
 int exec_cmd(champ_t *, corewar_t *, unsigned char *);
 int handle_flags(flags_t *);
 int parse_champion_file(corewar_t *, flags_t *);
+int update_dir(champ_t *cur);
+int check_array(champ_t *cur);
 champ_t *find_node(corewar_t *, int);
 void remove_champion(champ_t **, int, corewar_t *);
 
 /*      CMD       */
 int live(corewar_t *, champ_t *, unsigned char *);
+int store(corewar_t *, champ_t *, unsigned char *);
 
 #endif

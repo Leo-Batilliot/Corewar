@@ -8,7 +8,7 @@
 #include "corewar.h"
 #include "op.h"
 
-static int check_array(champ_t *cur)
+int check_array(champ_t *cur)
 {
     char *array[] = {"zjump", "ldi", "sti", "fork", "lldi", "lfork"};
 
@@ -18,7 +18,7 @@ static int check_array(champ_t *cur)
     return 0;
 }
 
-static int update_dir(champ_t *cur)
+int update_dir(champ_t *cur)
 {
     if (check_array(cur))
         return 2;
