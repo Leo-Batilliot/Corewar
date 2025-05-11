@@ -11,6 +11,7 @@
 
 const cmd_t cmd[] = {
     {"live", live},
+    {"st", store},
     {NULL, NULL}
 };
 
