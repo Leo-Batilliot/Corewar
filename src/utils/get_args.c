@@ -28,11 +28,14 @@ static int update_offset(champ_t *cur, int *offset, int index[2])
 static int up_indirect(champ_t *cur, int index[2],
     unsigned char *buffer, void **args)
 {
+    int offset = cur->pc + 1;
+
+    update_offset(cur, &offset, index);
     if (cur->type[index[0]] == 3) {
         args[index[1]] = malloc(sizeof(short));
         if (!args[index[1]])
             return 84;
-        *((short *)args[index[1]]) = convert_short(buffer, cur);
+        *((short *)args[index[1]]) = convert_short(buffer, offset);
         index[1]++;
     }
     return 0;
@@ -41,14 +44,17 @@ static int up_indirect(champ_t *cur, int index[2],
 static int up_direct(champ_t *cur, int index[2],
     unsigned char *buffer, void **args)
 {
+    int offset = cur->pc + 1;
+
+    update_offset(cur, &offset, index);
     if (cur->type[index[0]] == T_DIR) {
-        args[index[1]] = malloc(sizeof(int));
-        if (!args[index[1]])
-            return 84;
-        if (check_array(cur))
-            *((short *)args[index[1]]) = convert_short(buffer, cur);
-        else
-            *((int *)args[index[1]]) = convert_int(buffer, cur);
+        if (check_array(cur)) {
+            args[index[1]] = malloc(sizeof(short));
+            *((short *)args[index[1]]) = convert_short(buffer, offset);
+        } else {
+            args[index[1]] = malloc(sizeof(int));
+            *((int *)args[index[1]]) = convert_int(buffer, offset);
+        }
         index[1]++;
     }
     return 0;
@@ -74,7 +80,8 @@ static int update_type_args(champ_t *cur, int index[2],
 
 void **get_args(champ_t *cur, unsigned char *buffer)
 {
-    void **args = malloc(sizeof(void *) * (op_tab[cur->rem].nbr_args + 1));
+    int arg_count = op_tab[cur->rem].nbr_args;
+    void **args = malloc(sizeof(void *) * (arg_count + 1));
     int index[2] = {0, 0};
 
     if (!args)
@@ -87,5 +94,6 @@ void **get_args(champ_t *cur, unsigned char *buffer)
             return NULL;
         }
     }
+    args[arg_count] = NULL;
     return args;
 }

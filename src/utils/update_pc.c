@@ -22,8 +22,7 @@ int update_dir(champ_t *cur)
 {
     if (check_array(cur))
         return 2;
-    else
-        return 4;
+    return 4;
 }
 
 int update_pc(champ_t *cur)
@@ -34,10 +33,10 @@ int update_pc(champ_t *cur)
     for (int k = 0; k < op_tab[cur->rem].nbr_args; k++) {
         if (cur->type[k] == T_REG)
             cur->pc += 1;
-        if (cur->type[k] == T_IND)
-            cur->pc += 2;
         if (cur->type[k] == T_DIR)
             cur->pc += update_dir(cur);
+        if (cur->type[k] == 3)
+            cur->pc += 2;
     }
     return 0;
 }

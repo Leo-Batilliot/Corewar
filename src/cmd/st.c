@@ -50,5 +50,6 @@ int store(corewar_t *prog, champ_t *cur, unsigned char *buffer)
         return 84;
     equal_reg(args, cur);
     add_register(cur, args, buffer);
+    free_array(args);
     return 0;
 }
