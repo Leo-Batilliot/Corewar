@@ -29,6 +29,14 @@ SRC = 	lib/mini_printf.c 			\
 		src/game_loop.c 			\
 		src/cmd/live.c 				\
 		src/cmd/st.c 				\
+		src/cmd/ld.c 				\
+		src/cmd/add.c 				\
+		src/cmd/sub.c 				\
+		src/cmd/and.c 				\
+		src/cmd/or.c 				\
+		src/cmd/xor.c 				\
+		src/utils/in_reg.c 			\
+		src/utils/get_value.c 		\
 		src/exec_cmd.c 				\
 		src/parsing.c 				\
 		src/main.c 					\

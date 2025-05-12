@@ -33,6 +33,7 @@ typedef struct champ_s {
     unsigned int nbr_live;
     int pos;
     int id;
+    int carry;
     int registre[REG_NUMBER];
     args_type_t type[MAX_ARGS_NUMBER];
     struct champ_s *next;
@@ -100,8 +101,6 @@ int my_free(void *);
 unsigned int swap_end_color_4(unsigned int num);
 
 
-
-
 /*    INIT    */
 corewar_t *init_main_struct(void);
 flags_t *init_flags(char **);
@@ -115,9 +114,10 @@ int free_corewar(corewar_t *);
 int get_type(int *i, champ_t *cur, unsigned char *buffer);
 int set_champions_positions(corewar_t *prog, unsigned char *buffer);
 int update_pc(champ_t *cur);
-int convert_int(unsigned char *buffer, champ_t *cur);
-short convert_short(unsigned char *buffer, champ_t *cur);
+int convert_int(unsigned char *buffer, int);
+short convert_short(unsigned char *buffer, int);
 void **get_args(champ_t *, unsigned char *);
+int check_reg(int dst);
 
 /*    PROJECT'S MAIN FUNCTIONS    */
 corewar_t *parsing_main(char **);
@@ -129,9 +129,17 @@ int update_dir(champ_t *cur);
 int check_array(champ_t *cur);
 champ_t *find_node(corewar_t *, int);
 void remove_champion(champ_t **, int, corewar_t *);
+int read_mem(unsigned char *buffer, int addr, int size);
+int get_value(int, void *, champ_t *cur, unsigned char *);
 
 /*      CMD       */
 int live(corewar_t *, champ_t *, unsigned char *);
 int store(corewar_t *, champ_t *, unsigned char *);
+int load(corewar_t *, champ_t *, unsigned char *);
+int add(corewar_t *, champ_t *, unsigned char *);
+int sub(corewar_t *, champ_t *, unsigned char *);
+int and_cmd(corewar_t *, champ_t *, unsigned char *);
+int or_cmd(corewar_t *, champ_t *, unsigned char *);
+int xor_cmd(corewar_t *, champ_t *, unsigned char *);
 
 #endif

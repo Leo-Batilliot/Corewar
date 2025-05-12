@@ -19,6 +19,7 @@ champ_t *init_champion(int id, flags_t *flags)
     champion->pc = 0;
     champion->status = 0;
     champion->rem = 0;
+    champion->carry = 0;
     champion->nbr_live = 0;
     champion->pos = flags->address;
     champion->id = flags->id != -1 ? flags->id : id;

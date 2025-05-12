@@ -8,16 +8,16 @@
 #include "corewar.h"
 #include "op.h"
 
-int convert_int(unsigned char *buffer, champ_t *cur)
+int convert_int(unsigned char *buffer, int offset)
 {
-    return (int)(buffer[cur->pc + 1] << 24) |
-                (buffer[cur->pc + 2] << 16) |
-                (buffer[cur->pc + 3] << 8) |
-                (buffer[cur->pc + 4]);
+    return (int)((buffer[offset] << 24) |
+            (buffer[offset + 1] << 16) |
+            (buffer[offset + 2] << 8) |
+            (buffer[offset + 3]));
 }
 
-short convert_short(unsigned char *buffer, champ_t *cur)
+short convert_short(unsigned char *buffer, int offset)
 {
-    return (short)((buffer[cur->pc + 1] << 8) |
-                (buffer[cur->pc + 2]));
+    return (short)((buffer[offset] << 8) |
+                (buffer[offset + 1]));
 }

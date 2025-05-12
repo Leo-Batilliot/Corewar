@@ -12,6 +12,11 @@
 const cmd_t cmd[] = {
     {"live", live},
     {"st", store},
+    {"ld", load},
+    {"add", add},
+    {"and", and_cmd},
+    {"or", or_cmd},
+    {"xor", xor_cmd},
     {NULL, NULL}
 };
 
