@@ -12,7 +12,7 @@
 champ_t *find_node(corewar_t *prog, int id_to_find)
 {
     for (champ_t *tmp = prog->champions; tmp; tmp = tmp->next) {
-        if (tmp->registre[0] == id_to_find)
+        if (tmp->id == id_to_find)
             return tmp;
     }
     return NULL;

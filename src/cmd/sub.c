@@ -28,9 +28,9 @@ int sub(corewar_t *prog, champ_t *cur, unsigned char *buffer)
     for (int i = 0; args[i] && i < 3; i++)
         index[i] = *((char *)args[i]);
     if (!check_reg_array(3, index))
-        cur->registre[index[2]] =
-        cur->registre[index[0]] - cur->registre[index[1]];
-    cur->carry = (cur->registre[index[2]] == 0) ? 1 : 0;
+        cur->registre[index[2] - 1] =
+        cur->registre[index[0] - 1] - cur->registre[index[1] - 1];
+    cur->carry = (cur->registre[index[2] - 1] == 0) ? 1 : 0;
     free_array(args);
     return 0;
 }

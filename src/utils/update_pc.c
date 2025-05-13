@@ -28,8 +28,10 @@ int update_dir(champ_t *cur)
 int update_pc(champ_t *cur)
 {
     cur->pc += 1;
-    if (op_tab[cur->rem].nbr_args > 1)
+    if (op_tab[cur->rem].code != 0x01 && op_tab[cur->rem].code != 0x09 &&
+        op_tab[cur->rem].code != 0x0c && op_tab[cur->rem].code != 0x0f) {
         cur->pc += 1;
+    }
     for (int k = 0; k < op_tab[cur->rem].nbr_args; k++) {
         if (cur->type[k] == T_REG)
             cur->pc += 1;

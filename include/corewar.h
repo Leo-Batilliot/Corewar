@@ -34,6 +34,7 @@ typedef struct champ_s {
     int pos;
     int id;
     int carry;
+    int advance_pc;
     int registre[REG_NUMBER];
     args_type_t type[MAX_ARGS_NUMBER];
     struct champ_s *next;
@@ -111,13 +112,13 @@ int free_champion(champ_t *);
 int free_corewar(corewar_t *);
 
 /*    UTILS FUNCTIONS    */
-int get_type(int *i, champ_t *cur, unsigned char *buffer);
-int set_champions_positions(corewar_t *prog, unsigned char *buffer);
-int update_pc(champ_t *cur);
-int convert_int(unsigned char *buffer, int);
-short convert_short(unsigned char *buffer, int);
+int check_reg(int);
+int update_pc(champ_t *);
+int convert_int(unsigned char *, int);
+int get_type(int *, champ_t *cur, unsigned char *);
+int set_champions_positions(corewar_t *, unsigned char *);
+short convert_short(unsigned char *, int);
 void **get_args(champ_t *, unsigned char *);
-int check_reg(int dst);
 
 /*    PROJECT'S MAIN FUNCTIONS    */
 corewar_t *parsing_main(char **);
@@ -141,5 +142,11 @@ int sub(corewar_t *, champ_t *, unsigned char *);
 int and_cmd(corewar_t *, champ_t *, unsigned char *);
 int or_cmd(corewar_t *, champ_t *, unsigned char *);
 int xor_cmd(corewar_t *, champ_t *, unsigned char *);
+int zjump(corewar_t *, champ_t *, unsigned char *);
+int ldi(corewar_t *, champ_t *, unsigned char *);
+int sti(corewar_t *, champ_t *, unsigned char *);
+int lld(corewar_t *, champ_t *, unsigned char *);
+int lldi(corewar_t *, champ_t *, unsigned char *);
+int aff(corewar_t *, champ_t *, unsigned char *);
 
 #endif

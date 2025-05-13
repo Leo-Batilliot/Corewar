@@ -17,7 +17,7 @@ static int equal_reg(void **args, champ_t *cur)
     if (cur->type[1] == T_REG) {
         src = *((char *)args[0]);
         dst = *((char *)args[1]);
-        cur->registre[src] = cur->registre[dst];
+        cur->registre[src - 1] = cur->registre[dst - 1];
     }
     return 0;
 }
@@ -34,7 +34,7 @@ static int add_register(champ_t *cur, void **args, unsigned char *buffer)
         dst = *((short *)args[1]);
         pos = (cur->pc + (dst % IDX_MOD));
         for (int i = 0; i < 4; i++) {
-            byte = (cur->registre[src] >> (8 * (3 - i))) & 0xFF;
+            byte = (cur->registre[src - 1] >> (8 * (3 - i))) & 0xFF;
             buffer[(pos + i) % MEM_SIZE] = byte;
         }
     }

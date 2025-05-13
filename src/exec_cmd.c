@@ -17,6 +17,12 @@ const cmd_t cmd[] = {
     {"and", and_cmd},
     {"or", or_cmd},
     {"xor", xor_cmd},
+    {"zjmp", zjump},
+    {"ldi", ldi},
+    {"sti", sti},
+    {"lld", lld},
+    {"lldi", lldi},
+    {"aff", aff},
     {NULL, NULL}
 };
 
@@ -33,8 +39,11 @@ static int exec_func(char *cur_cmd, corewar_t *prog,
 int exec_cmd(champ_t *cur, corewar_t *prog, unsigned char *buffer)
 {
     if (cur->wait_cycle == 0 && cur->status == 1) {
+        cur->advance_pc = 1;
         exec_func(op_tab[cur->rem].mnemonique, prog, cur, buffer);
-        update_pc(cur);
+        if (cur->advance_pc == 1) {
+            update_pc(cur);
+        }
         cur->status = 0;
     }
     return 0;

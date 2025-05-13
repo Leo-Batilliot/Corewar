@@ -12,8 +12,10 @@
 
 static int update_offset(champ_t *cur, int *offset, int index[2])
 {
-    if (op_tab[cur->rem].nbr_args > 1)
+    if (op_tab[cur->rem].code != 0x01 && op_tab[cur->rem].code != 0x09 &&
+        op_tab[cur->rem].code != 0x0c && op_tab[cur->rem].code != 0x0f) {
         (*offset)++;
+    }
     for (int i = 0; i < index[0]; i++) {
         if (cur->type[i] == T_REG)
             (*offset) += 1;
@@ -71,7 +73,7 @@ static int update_type_args(champ_t *cur, int index[2],
         args[index[1]] = malloc(sizeof(char));
         if (!args[index[1]])
             return 84;
-        *((char *)args[index[1]]) = buffer[cur->pc + offset];
+        *((char *)args[index[1]]) = buffer[(cur->pc + offset) % MEM_SIZE];
         index[1]++;
     }
     up_indirect(cur, index, buffer, args);
