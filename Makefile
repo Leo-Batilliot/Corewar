@@ -35,6 +35,12 @@ SRC = 	lib/mini_printf.c 			\
 		src/cmd/and.c 				\
 		src/cmd/or.c 				\
 		src/cmd/xor.c 				\
+		src/cmd/zjump.c 			\
+		src/cmd/ldi.c 				\
+		src/cmd/sti.c 				\
+		src/cmd/lld.c 				\
+		src/cmd/lldi.c 				\
+		src/cmd/aff.c				\
 		src/utils/in_reg.c 			\
 		src/utils/get_value.c 		\
 		src/exec_cmd.c 				\

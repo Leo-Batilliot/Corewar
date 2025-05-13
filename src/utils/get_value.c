@@ -7,6 +7,7 @@
 
 #include "corewar.h"
 #include "op.h"
+#include <stdio.h>
 
 int get_value(int type, void *arg, champ_t *cur, unsigned char *buffer)
 {
@@ -14,13 +15,16 @@ int get_value(int type, void *arg, champ_t *cur, unsigned char *buffer)
 
     if (type == T_REG) {
         r = *((char *)arg);
-        return cur->registre[r];
+        return cur->registre[r - 1];
     }
-    if (type == T_DIR)
+    if (type == T_DIR) {
+        if (check_array(cur))
+            return *((short *)arg);
         return *((int *)arg);
-    if (type == 2) {
+    }
+    if (type == 3) {
         r = *((short *)arg);
-        r = (cur->pc + r % IDX_MOD);
+        r = (cur->pc + r % IDX_MOD) % MEM_SIZE;
         return read_mem(buffer, r, 4);
     }
     return 0;

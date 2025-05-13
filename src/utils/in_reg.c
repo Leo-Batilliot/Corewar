@@ -10,7 +10,7 @@
 
 int check_reg(int dst)
 {
-    if (dst >= 1 && dst <= REG_NUMBER)
+    if (dst - 1 >= 1 && dst - 1 <= REG_NUMBER)
         return 1;
     return 0;
 }

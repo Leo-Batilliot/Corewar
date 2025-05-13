@@ -9,30 +9,18 @@
 #include "op.h"
 #include <stdio.h>
 
-int read_mem(unsigned char *buffer, int addr, int size)
-{
-    int value = 0;
-    int byte = 0;
-
-    for (int i = 0; i < size; i++) {
-        byte = buffer[(addr + i)];
-        value |= byte << (8 * (size - 1 - i));
-    }
-    return value;
-}
-
 static int get_addr(void **args, unsigned char *buffer, champ_t *cur)
 {
     int value = 0;
     int addr = 0;
 
     addr = *((short *)args[0]);
-    addr = (cur->pc + addr % IDX_MOD) % MEM_SIZE;
+    addr = (cur->pc + addr) % MEM_SIZE;
     value = read_mem(buffer, addr, 4);
     return value;
 }
 
-int load(corewar_t *prog, champ_t *cur, unsigned char *buffer)
+int lld(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);
     int dst = 0;

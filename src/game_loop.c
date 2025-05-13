@@ -23,13 +23,19 @@ static int update_cycle(champ_t *champion)
 
 int watch_health(champ_t *champion, corewar_t *corewar)
 {
-    if (corewar->cycle_alive == 0 && champion->nbr_live <= 0) {
-        remove_champion(&corewar->champions, champion->registre[0], corewar);
+    if (corewar->cycle_alive <= 0 && champion->nbr_live <= 0) {
+        remove_champion(&corewar->champions, champion->id, corewar);
         return 0;
     }
     if (champion->nbr_live >= NBR_LIVE && corewar->cycle_alive > 0) {
         corewar->cycle_alive -= CYCLE_DELTA;
         champion->nbr_live = 0;
+        return 0;
+    }
+    if (corewar->cycle_alive <= 0 && champion->nbr_live > 0) {
+        corewar->cycle_alive = CYCLE_TO_DIE;
+        champion->nbr_live = 0;
+        return 0;
     }
     return 0;
 }

@@ -22,5 +22,5 @@ int free_array(void **array)
     for (int i = 0; array[i]; i++)
         free(array[i]);
     free(array);
-    return 84;
+    return 0;
 }
