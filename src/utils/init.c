@@ -24,7 +24,7 @@ static int available(int id, corewar_t *corewar)
 
 // name :   first_available
 // args :   corewar main struct
-// use :    return the first available id 
+// use :    return the first available id
 static int first_available(corewar_t *corewar)
 {
     for (int res = 1; res < 1000; res++) {
@@ -48,7 +48,7 @@ static int get_id(corewar_t *corewar, int flag_id)
     }
     if (available(corewar->nb_robot + 1, corewar))
         return corewar->nb_robot + 1;
-    return first_available(corewar);      
+    return first_available(corewar);
 }
 
 // name :   init_champion
