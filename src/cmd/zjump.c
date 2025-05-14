@@ -19,7 +19,7 @@ int zjump(corewar_t *prog, champ_t *cur, unsigned char *buffer)
     (void)prog;
     if (!args)
         return 84;
-    index = *((short *)args[0]);
+    index = get_value(cur->type[0], args[0], cur, buffer);
     if (cur->carry == 1) {
         cur->pc = (cur->pc + (index % IDX_MOD));
         cur->advance_pc = 0;

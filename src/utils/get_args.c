@@ -103,6 +103,8 @@ void **get_args(champ_t *cur, unsigned char *buffer)
 
     if (!args)
         return NULL;
+    for (int i = 0; i <= arg_count; i++)
+        args[i] = NULL;
     args[(int)op_tab[(unsigned char)cur->rem].nbr_args] = NULL;
     for (; index[0] < op_tab[cur->rem].nbr_args; index[0]++) {
         if (update_type_args(cur, index, args, buffer) == 84) {

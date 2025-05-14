@@ -31,7 +31,7 @@ int watch_health(champ_t *champion, corewar_t *corewar)
 {
     if (corewar->cycle_alive <= 0 && champion->nbr_live <= 0) {
         remove_champion(&corewar->champions, champion->id, corewar);
-        return 0;
+        return 1;
     }
     if (champion->nbr_live >= NBR_LIVE && corewar->cycle_alive > 0) {
         champion->state = 2;
@@ -61,39 +61,33 @@ static int loop_type(champ_t *champion, unsigned char *buffer)
 // name :   execute_each_champ
 // args :   champion, buffer, corewar
 // use :    execute each champ
-int execute_each_champ(champ_t *champion, unsigned char *buffer,
+int execute_each_champ(champ_t **champion, unsigned char *buffer,
     corewar_t *corewar)
 {
-    if (update_cycle(champion))
-        return 2;
-    if (champion->status == 0) {
-        if (loop_type(champion, buffer))
+    champ_t *next = NULL;
+
+    if (update_cycle(*champion))
+        return 0;
+    if ((*champion)->status == 0) {
+        if (loop_type((*champion), buffer))
             return 1;
     }
-    exec_cmd(champion, corewar, buffer);
-    watch_health(champion, corewar);
+    exec_cmd(*champion, corewar, buffer);
+    next = (*champion)->next;
+    watch_health(*champion, corewar);
+    *champion = next;
     return 0;
 }
 
 // name :   check_end
 // args :   corewar, game_run
 // use :    check the condition if is the enf of the game
-static int check_end(corewar_t *corewar, bool *game_run)
+static int end(corewar_t *corewar)
 {
-    champ_t *winner = NULL;
-    int count = 0;
-
-    for (champ_t *cur = corewar->champions; cur; cur = cur->next) {
-        if (cur->child == 0)
-            count++;
-    }
-    if (count <= 1) {
-        winner = find_node(corewar, corewar->last_alive, 0);
-        if (winner) {
-            mini_printf(1, "The player %i", winner->registre[0]);
-            mini_printf(1, "(%s)has won.\n", winner->prog_name);
-        }
-        *game_run = false;
+    if (corewar->nb_robot <= 1) {
+        mini_printf(1, "The player %i", corewar->champions->registre[0]);
+        mini_printf(1, "(%s)has won.\n", corewar->champions->prog_name);
+        return 1;
     }
     return 0;
 }
@@ -101,11 +95,10 @@ static int check_end(corewar_t *corewar, bool *game_run)
 // name :   update_next
 // args :   save_next, champ
 // use :    update next for list
-static int update_next(champ_t **save_next, champ_t *champ)
+static int update_next(champ_t **champ)
 {
-    (*save_next) = champ->next;
-    if (champ->state != 0) {
-        champ = (*save_next);
+    if ((*champ)->state != 0) {
+        (*champ) = (*champ)->next;
         return 1;
     }
     return 0;
@@ -114,24 +107,16 @@ static int update_next(champ_t **save_next, champ_t *champ)
 // name :   loop_champ
 // args :   corewar, buffer, game_run
 // use :    loop each champ
-int loop_champ(corewar_t *corewar, unsigned char *buffer, bool *game_run)
+int loop_champ(corewar_t *corewar, unsigned char *buffer)
 {
-    int res = 0;
     champ_t *champ = corewar->champions;
-    champ_t *save_next = NULL;
 
-    while (champ != NULL && *game_run == true) {
-        if (update_next(&save_next, champ))
+    while (champ) {
+        if (update_next(&champ))
             continue;
-        res = execute_each_champ(champ, buffer, corewar);
-        if (res == 2) {
-            champ = save_next;
-            continue;
-        }
-        if (res == 1)
-            break;
-        check_end(corewar, game_run);
-        champ = save_next;
+        execute_each_champ(&champ, buffer, corewar);
+        if (end(corewar))
+            return 1;
     }
     return 0;
 }
@@ -141,7 +126,7 @@ int loop_champ(corewar_t *corewar, unsigned char *buffer, bool *game_run)
 // use :    print byte in hex
 void print_hex_byte(unsigned char byte)
 {
-    char hex_digits[] = "0123456789abcdef";
+    char hex_digits[] = "0123456789ABCDEF";
     char out[2] = {0, 0};
 
     out[0] = hex_digits[(byte >> 4) & 0x0F];
@@ -154,12 +139,12 @@ void print_hex_byte(unsigned char byte)
 // use :    print dump memory
 static int dump(unsigned char *buffer)
 {
-    mini_printf(1, "Memory dump:\n");
     for (int i = 0; i < MEM_SIZE; i++) {
-        if (i % 64 == 0)
+        if (i > 0 && i % 32 == 0)
             mini_printf(1, "\n");
         print_hex_byte(buffer[i]);
-        mini_printf(1, " ");
+        if (i % 32 != 31)
+            mini_printf(1, " ");
     }
     mini_printf(1, "\n");
     return 0;
@@ -170,11 +155,10 @@ static int dump(unsigned char *buffer)
 // use :    game loop, start of the vm
 int game_loop(corewar_t *corewar, unsigned char *buffer)
 {
-    bool game_run = true;
-
     corewar->cycle_alive = CYCLE_TO_DIE;
-    for (int cycle = 0; game_run; cycle++) {
-        loop_champ(corewar, buffer, &game_run);
+    for (int cycle = 0; cycle >= 0; cycle++) {
+        if (loop_champ(corewar, buffer))
+            return 0;
         reset_cycle(corewar);
         corewar->cycle_alive--;
         if (cycle == corewar->dump)
