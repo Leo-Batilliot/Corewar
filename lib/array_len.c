@@ -5,6 +5,9 @@
 ** my_array_len
 */
 
+// name :   array_len
+// args :   array
+// use :    array len
 int array_len(const void **array)
 {
     int res = 0;

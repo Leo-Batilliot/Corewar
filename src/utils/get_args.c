@@ -10,6 +10,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+// name :   update_offset
+// args :   cur, offsetn index[2]
+// use :    update offset for next cmd
 static int update_offset(champ_t *cur, int *offset, int index[2])
 {
     if (op_tab[cur->rem].code != 0x01 && op_tab[cur->rem].code != 0x09 &&
@@ -27,6 +30,9 @@ static int update_offset(champ_t *cur, int *offset, int index[2])
     return 0;
 }
 
+// name :   up_indirect
+// args :   cur, index[2], buffer, args
+// use :    update indirext value
 static int up_indirect(champ_t *cur, int index[2],
     unsigned char *buffer, void **args)
 {
@@ -43,6 +49,9 @@ static int up_indirect(champ_t *cur, int index[2],
     return 0;
 }
 
+// name :   up_direct
+// args :   cur, index[2], buffer, args
+// use :    update direct value
 static int up_direct(champ_t *cur, int index[2],
     unsigned char *buffer, void **args)
 {
@@ -62,6 +71,9 @@ static int up_direct(champ_t *cur, int index[2],
     return 0;
 }
 
+// name :   update_type_args
+// args :   cur, index[2], args, buffer
+// use :    update args
 static int update_type_args(champ_t *cur, int index[2],
     void **args, unsigned char *buffer)
 {
@@ -80,6 +92,9 @@ static int update_type_args(champ_t *cur, int index[2],
     return 0;
 }
 
+// name :   get_args
+// args :   cur, buffer
+// use :    common function to get args
 void **get_args(champ_t *cur, unsigned char *buffer)
 {
     int arg_count = op_tab[cur->rem].nbr_args;

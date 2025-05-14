@@ -8,12 +8,18 @@
 #include "corewar.h"
 #include <stddef.h>
 
+// name :   reset_flags
+// args :   flags
+// use :    reset value for flags
 static void reset_flags(flags_t *flags)
 {
     flags->address = -1;
     flags->id = -1;
 }
 
+// name :   parsing_main
+// args :   array
+// use :    parsing main, check flags
 corewar_t *parsing_main(char **array)
 {
     corewar_t *corewar = init_main_struct();

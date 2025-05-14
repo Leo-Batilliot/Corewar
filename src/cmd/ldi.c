@@ -8,6 +8,9 @@
 #include "corewar.h"
 #include "op.h"
 
+// name :   ldi
+// args :   prog, cur, buffer
+// use :    command ldi
 int ldi(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

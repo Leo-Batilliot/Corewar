@@ -9,6 +9,9 @@
 #include "op.h"
 #include <stdio.h>
 
+// name :   get_addr
+// args :   args, buffer, cur
+// use :    get new adresse for read mem
 static int get_addr(void **args, unsigned char *buffer, champ_t *cur)
 {
     int value = 0;
@@ -20,6 +23,9 @@ static int get_addr(void **args, unsigned char *buffer, champ_t *cur)
     return value;
 }
 
+// name :   lld
+// args :   prog, cur, buffer
+// use :    lld command
 int lld(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

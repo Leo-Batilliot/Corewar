@@ -34,8 +34,11 @@ typedef struct champ_s {
     int pos;
     int id;
     int carry;
+    int child;
     int advance_pc;
     int registre[REG_NUMBER];
+    int unique_id;
+    int state;
     args_type_t type[MAX_ARGS_NUMBER];
     struct champ_s *next;
 } champ_t;
@@ -45,6 +48,7 @@ typedef struct {
     int last_alive;
     int nb_robot;
     int dump;
+    int cur_id;
     champ_t *champions;
 } corewar_t;
 
@@ -71,6 +75,7 @@ char *my_strdup(const char *);
 char *array_to_str(const char **, char);
 char *my_strcat(const char *, const char *, const char *);
 int my_strncpy(const char *, const char *, int);
+char *my_strcpy(char *dest, char const *src);
 char *str_lowcase(char *);
 int array_len(const void **);
 int is_bool(const char *);
@@ -105,7 +110,7 @@ unsigned int swap_end_color_4(unsigned int num);
 /*    INIT    */
 corewar_t *init_main_struct(void);
 flags_t *init_flags(char **);
-champ_t *init_champion(int, flags_t *);
+champ_t *init_champion(int, flags_t *, corewar_t *);
 
 /*    FREE    */
 int free_champion(champ_t *);
@@ -119,6 +124,7 @@ int get_type(int *, champ_t *cur, unsigned char *);
 int set_champions_positions(corewar_t *, unsigned char *);
 short convert_short(unsigned char *, int);
 void **get_args(champ_t *, unsigned char *);
+void add_to_end(corewar_t *prog, champ_t *champion);
 
 /*    PROJECT'S MAIN FUNCTIONS    */
 corewar_t *parsing_main(char **);
@@ -128,10 +134,12 @@ int handle_flags(flags_t *);
 int parse_champion_file(corewar_t *, flags_t *);
 int update_dir(champ_t *cur);
 int check_array(champ_t *cur);
-champ_t *find_node(corewar_t *, int);
+champ_t *find_node(corewar_t *, int, int);
 void remove_champion(champ_t **, int, corewar_t *);
-int read_mem(unsigned char *buffer, int addr, int size);
-int get_value(int, void *, champ_t *cur, unsigned char *);
+int read_mem(unsigned char *, int, int);
+int get_value(int, void *, champ_t *, unsigned char *);
+int reset_cycle(corewar_t *);
+champ_t *new_champ(corewar_t *, champ_t *, int);
 
 /*      CMD       */
 int live(corewar_t *, champ_t *, unsigned char *);
@@ -148,5 +156,7 @@ int sti(corewar_t *, champ_t *, unsigned char *);
 int lld(corewar_t *, champ_t *, unsigned char *);
 int lldi(corewar_t *, champ_t *, unsigned char *);
 int aff(corewar_t *, champ_t *, unsigned char *);
+int fork_cmd(corewar_t *, champ_t *, unsigned char *);
+int lfork_cmd(corewar_t *, champ_t *, unsigned char *);
 
 #endif

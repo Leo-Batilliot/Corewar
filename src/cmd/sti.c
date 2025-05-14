@@ -8,6 +8,9 @@
 #include "corewar.h"
 #include "op.h"
 
+// name :   write_bytes
+// args :   buffer, addrn val, size
+// use :    write value in memory (buffer)
 void write_bytes(unsigned char *buffer, int addr, int val, int size)
 {
     for (int i = 0; i < size; i++) {
@@ -15,6 +18,9 @@ void write_bytes(unsigned char *buffer, int addr, int val, int size)
     }
 }
 
+// name :   sti
+// args :   prog, cur, buffer
+// use :    command sti
 int sti(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

@@ -8,6 +8,9 @@
 #include "corewar.h"
 #include "op.h"
 
+// name :   parse_args_types
+// args :   i, cur, buffer
+// use :    add type to cur.type
 int parse_args_types(int *i, champ_t *cur, unsigned char *buffer)
 {
     unsigned char arg_types = buffer[cur->pc + 1];
@@ -20,6 +23,9 @@ int parse_args_types(int *i, champ_t *cur, unsigned char *buffer)
     return 0;
 }
 
+// name :   cmd_one_arg
+// args :   i, cur
+// use :    check cmd with one arg
 static int cmd_one_arg(int *i, champ_t *cur)
 {
     char *array[] = {"live", "zjump", "fork", "lfork"};
@@ -33,6 +39,9 @@ static int cmd_one_arg(int *i, champ_t *cur)
     return 0;
 }
 
+// name :   get_type
+// args :   i, cur, buffer
+// use :    common function to get type
 int get_type(int *i, champ_t *cur, unsigned char *buffer)
 {
     if (op_tab[(*i)].code == buffer[cur->pc]) {

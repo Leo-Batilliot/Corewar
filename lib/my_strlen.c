@@ -5,7 +5,9 @@
 ** my_strlen
 */
 
-
+// name :   my_strlen
+// args :   str
+// use :    return string of len
 int my_strlen(const char *str)
 {
     int res = 0;

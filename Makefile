@@ -16,6 +16,8 @@ SRC = 	lib/mini_printf.c 			\
 		lib/swap_end_color.c 		\
 		lib/array_len.c 			\
 		lib/free.c 					\
+		lib/my_strcpy.c 			\
+		lib/my_strdup.c 			\
 		src/utils/get_type.c 		\
 		src/utils/linked_list.c 	\
 		src/utils/op.c 				\
@@ -26,6 +28,7 @@ SRC = 	lib/mini_printf.c 			\
 		src/utils/convert_type.c 	\
 		src/utils/get_args.c 		\
 		src/utils/flags.c 			\
+		src/utils/reset_cycle.c 	\
 		src/game_loop.c 			\
 		src/cmd/live.c 				\
 		src/cmd/st.c 				\
@@ -41,6 +44,8 @@ SRC = 	lib/mini_printf.c 			\
 		src/cmd/lld.c 				\
 		src/cmd/lldi.c 				\
 		src/cmd/aff.c				\
+		src/cmd/fork.c 				\
+		src/cmd/lfork.c 			\
 		src/utils/in_reg.c 			\
 		src/utils/get_value.c 		\
 		src/exec_cmd.c 				\

@@ -13,6 +13,9 @@
 #include <stdlib.h>
 #include <errno.h>
 
+// name :   set_champions_positions
+// args :   prog, buffer
+// use :    set champions position in memory
 int set_champions_positions(corewar_t *prog, unsigned char *buffer)
 {
     int k = 0;
@@ -27,11 +30,15 @@ int set_champions_positions(corewar_t *prog, unsigned char *buffer)
         tmp->registre[0] = tmp->id;
         for (int i = 1; i < REG_NUMBER; i++)
             tmp->registre[i] = 0;
+        tmp->state = 0;
     }
     return 0;
 }
 
-static void add_to_end(corewar_t *prog, champ_t *champion)
+// name :   add_to_end
+// args :   prog, champion
+// use :    add robot at end of the list
+void add_to_end(corewar_t *prog, champ_t *champion)
 {
     champ_t *tmp = NULL;
 
@@ -44,6 +51,9 @@ static void add_to_end(corewar_t *prog, champ_t *champion)
     tmp->next = champion;
 }
 
+// name :   invalid_champ_info
+// args :   FD, champion
+// use :    check if valid info
 static int invalid_champ_info(FILE *fd, champ_t *champion)
 {
     unsigned int padding = 0;
@@ -65,6 +75,9 @@ static int invalid_champ_info(FILE *fd, champ_t *champion)
     return 0;
 }
 
+// name :   invalid_champ_code
+// args :   fd, champion
+// use :    check if valid champ code
 static int invalid_champ_code(FILE *fd, champ_t *champion)
 {
     champion->code = malloc(sizeof(char) * champion->prog_size);
@@ -76,10 +89,13 @@ static int invalid_champ_code(FILE *fd, champ_t *champion)
     return 0;
 }
 
+// name :   handle_file_content
+// args :   fd, prog, flags
+// use :    check file content for add robot
 static int handle_file_content(FILE *fd, corewar_t *prog, flags_t *flags)
 {
     static int id = 1;
-    champ_t *champion = init_champion(id, flags);
+    champ_t *champion = init_champion(id, flags, prog);
 
     if (!champion)
         return 84;
@@ -95,6 +111,9 @@ static int handle_file_content(FILE *fd, corewar_t *prog, flags_t *flags)
     return 0;
 }
 
+// name :   print_file_error
+// args :   filepath
+// use :    function to print error
 static void print_file_error(const char *filepath)
 {
     struct stat file;
@@ -109,6 +128,9 @@ static void print_file_error(const char *filepath)
     }
 }
 
+// name :   try_to_open
+// args :   str
+// use :    try open a FILE
 static FILE *try_to_open(char *str)
 {
     FILE *fd;
@@ -126,6 +148,9 @@ static FILE *try_to_open(char *str)
     return fd;
 }
 
+// name :   parse_champion_file
+// args :   corewar, flags
+// use :    function to parse new file
 int parse_champion_file(corewar_t *corewar, flags_t *flags)
 {
     FILE *fd = NULL;

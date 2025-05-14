@@ -8,6 +8,9 @@
 
 #include "corewar.h"
 
+// name :   free_champion
+// args :   champ
+// use :    free champ with my free
 int free_champion(champ_t *champ)
 {
     if (!champ)
@@ -18,6 +21,9 @@ int free_champion(champ_t *champ)
     return 0;
 }
 
+// name :   free_champions_list
+// args :   head
+// use :    free list champ
 static int free_champions_list(champ_t *head)
 {
     champ_t *next;
@@ -29,6 +35,9 @@ static int free_champions_list(champ_t *head)
     return 0;
 }
 
+// name :   free_corewar
+// args :   corewar
+// use :    free memory with my free
 int free_corewar(corewar_t *corewar)
 {
     if (!corewar)

@@ -9,6 +9,9 @@
 #include "corewar.h"
 #include <stddef.h>
 
+// name :   cmd
+// args :   cmd
+// use :    pointeur to function
 const cmd_t cmd[] = {
     {"live", live},
     {"st", store},
@@ -23,9 +26,14 @@ const cmd_t cmd[] = {
     {"lld", lld},
     {"lldi", lldi},
     {"aff", aff},
+    {"fork", fork_cmd},
+    {"lfork", lfork_cmd},
     {NULL, NULL}
 };
 
+// name :   exec_func
+// args :   cur_cmd, prog , cur, buffer
+// use :    call pointeur to func
 static int exec_func(char *cur_cmd, corewar_t *prog,
     champ_t *cur, unsigned char *buffer)
 {
@@ -36,6 +44,9 @@ static int exec_func(char *cur_cmd, corewar_t *prog,
     return 0;
 }
 
+// name :   exec_cmd
+// args :   cur, prog, buffer
+// use :    function to exec cmd
 int exec_cmd(champ_t *cur, corewar_t *prog, unsigned char *buffer)
 {
     if (cur->wait_cycle == 0 && cur->status == 1) {

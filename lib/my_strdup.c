@@ -4,8 +4,13 @@
 ** File description:
 ** my_strdup
 */
-#include "my.h"
 
+#include "corewar.h"
+#include <stdlib.h>
+
+// name :   my_strdup
+// args :   dup
+// use :    dup an string and return a new string
 char *my_strdup(const char *dup)
 {
     int len = 0;

@@ -8,6 +8,9 @@
 #include "corewar.h"
 #include "op.h"
 
+// name :   flag
+// args :   flags, value, flag
+// use :    function common to check all flags
 static int flag(flags_t *flags, int *value, char *flag)
 {
     int atoi_error = 0;
@@ -26,6 +29,9 @@ static int flag(flags_t *flags, int *value, char *flag)
     return 0;
 }
 
+// name :   handle_flags
+// args :   flags
+// use :    function handle flags
 int handle_flags(flags_t *flags)
 {
     int res = 0;
