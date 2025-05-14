@@ -8,6 +8,9 @@
 #include "corewar.h"
 #include "op.h"
 
+// name :   check_reg_array
+// args :   size, index[3]
+// use :    check register in boucle
 static int check_reg_array(int size, int index[3])
 {
     for (int i = 0; i < size; i++) {
@@ -17,6 +20,9 @@ static int check_reg_array(int size, int index[3])
     return 0;
 }
 
+// name :   sub
+// args :   prog, cur, buffer
+// use :    sub command (substrac register)
 int sub(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

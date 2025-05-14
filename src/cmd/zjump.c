@@ -8,6 +8,9 @@
 #include "corewar.h"
 #include "op.h"
 
+// name :   zjump
+// args :   prog, cur, buffer
+// use :    jump at an address in memory
 int zjump(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

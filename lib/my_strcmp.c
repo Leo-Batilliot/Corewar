@@ -4,8 +4,12 @@
 ** File description:
 ** my_strcmp
 */
+
 #include "corewar.h"
 
+// name :   my_strcmp
+// args :   str_1, str_2
+// use :    compar two string
 int my_strcmp(const char *str1, const char *str2)
 {
     if (!str1 || !str2 || my_strlen(str1) != my_strlen(str2))

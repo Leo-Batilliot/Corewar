@@ -5,6 +5,9 @@
 ** swap_end_color
 */
 
+// name :   swap_end_color_4
+// args :   num
+// use :    swap big to int little endian
 unsigned int swap_end_color_4(unsigned int num)
 {
     num = ((num >> 24) & 0x000000FF) |

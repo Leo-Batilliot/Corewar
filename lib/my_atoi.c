@@ -5,12 +5,18 @@
 ** my_get_nbr
 */
 
+// name :   return_error
+// args :   error, return value
+// use :    retur an error
 static int return_error(int *error, int return_value)
 {
     *error = 1;
     return return_value;
 }
 
+// name :   my_atoi
+// args :   string, error
+// use :    my atoi, transform string in int
 int my_atoi(const char *string, int *error)
 {
     long res = 0;

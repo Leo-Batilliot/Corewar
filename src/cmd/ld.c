@@ -9,6 +9,9 @@
 #include "op.h"
 #include <stdio.h>
 
+// name :   read_mem
+// args :   buffer, addr, size
+// use :    read value in memory at new address
 int read_mem(unsigned char *buffer, int addr, int size)
 {
     int value = 0;
@@ -21,6 +24,9 @@ int read_mem(unsigned char *buffer, int addr, int size)
     return value;
 }
 
+// name :   get_addr
+// args :   args, buffer, cur
+// use :    get new adresse for read mem
 static int get_addr(void **args, unsigned char *buffer, champ_t *cur)
 {
     int value = 0;
@@ -32,6 +38,9 @@ static int get_addr(void **args, unsigned char *buffer, champ_t *cur)
     return value;
 }
 
+// name :   load
+// args :   prog, cur, buffer
+// use :    load cmd
 int load(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

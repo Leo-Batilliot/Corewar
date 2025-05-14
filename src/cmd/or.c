@@ -9,6 +9,9 @@
 #include "op.h"
 #include <stdlib.h>
 
+// name :   or_cmd
+// args :   prog, cur, buffer
+// use :    command or
 int or_cmd(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

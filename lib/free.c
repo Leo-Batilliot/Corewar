@@ -7,6 +7,9 @@
 
 #include "stdlib.h"
 
+// name :   my_free
+// args :   ptr
+// use :    free pointeur
 int my_free(void *ptr)
 {
     if (!ptr)
@@ -15,6 +18,9 @@ int my_free(void *ptr)
     return 84;
 }
 
+// name :   free_array
+// args :   array
+// use :    free array with my free
 int free_array(void **array)
 {
     if (!array)

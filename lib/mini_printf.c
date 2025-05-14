@@ -9,11 +9,17 @@
 #include <stdarg.h>
 #include <unistd.h>
 
+// name :   my_putchar
+// args :   output, c
+// use :    put char
 void my_putchar(int output, char c)
 {
     write(output, &c, 1);
 }
 
+// name :   my_put_nbr
+// args :   output, nb
+// use :    put nbr
 void my_put_nbr(int output, long nb)
 {
     char res;
@@ -29,6 +35,9 @@ void my_put_nbr(int output, long nb)
     my_putchar(output, res);
 }
 
+// name :   putstr
+// args :   output, str
+// use :    put string
 void putstr(int output, const char *str)
 {
     if (!str)
@@ -36,6 +45,9 @@ void putstr(int output, const char *str)
     write(output, str, my_strlen(str));
 }
 
+// name :   process_format
+// args :   output, specifier, ap
+// use :    check specifier
 void process_format(int output, char specifier, va_list ap)
 {
     switch (specifier) {
@@ -59,6 +71,9 @@ void process_format(int output, char specifier, va_list ap)
     }
 }
 
+// name :   mini_printf
+// args :   output, format
+// use :    mini_printf
 int mini_printf(int output, const char *format, ...)
 {
     va_list ap;

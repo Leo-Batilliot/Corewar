@@ -9,6 +9,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+// name :   not_enough_arguments
+// args :   args, ac
+// use :    check if we have not enought args
 static int not_enough_arguments(char **args, int ac)
 {
     int count = 0;
@@ -29,6 +32,9 @@ static int not_enough_arguments(char **args, int ac)
     return 0;
 }
 
+// name :   main
+// args :   ac, av
+// use :    main of the project
 int main(int ac, char **av)
 {
     corewar_t *corewar = NULL;

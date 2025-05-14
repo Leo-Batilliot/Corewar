@@ -9,6 +9,9 @@
 #include <stdio.h>
 #include "op.h"
 
+// name :   equal_reg
+// args :   args, cur
+// use :    update register
 static int equal_reg(void **args, champ_t *cur)
 {
     int src = 0;
@@ -22,6 +25,9 @@ static int equal_reg(void **args, champ_t *cur)
     return 0;
 }
 
+// name :   add_register
+// args :   cur, args, buffer
+// use :    add new value to new adress
 static int add_register(champ_t *cur, void **args, unsigned char *buffer)
 {
     int src = 0;
@@ -41,6 +47,9 @@ static int add_register(champ_t *cur, void **args, unsigned char *buffer)
     return 0;
 }
 
+// name :   store
+// args :   prog, cur, buffer
+// use :    store cmd
 int store(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

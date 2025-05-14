@@ -9,6 +9,9 @@
 #include "op.h"
 #include <unistd.h>
 
+// name :   aff
+// args :   prog, cur, buffer
+// use :    cmd aff
 int aff(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

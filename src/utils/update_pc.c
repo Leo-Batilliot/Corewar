@@ -8,6 +8,9 @@
 #include "corewar.h"
 #include "op.h"
 
+// name :   check_array
+// args :   cur
+// use :    check if is dir
 int check_array(champ_t *cur)
 {
     char *array[] = {"zjump", "ldi", "sti", "fork", "lldi", "lfork"};
@@ -18,6 +21,9 @@ int check_array(champ_t *cur)
     return 0;
 }
 
+// name :   update_dir
+// args :   cur
+// use :    update args with dur
 int update_dir(champ_t *cur)
 {
     if (check_array(cur))
@@ -25,6 +31,9 @@ int update_dir(champ_t *cur)
     return 4;
 }
 
+// name :   update_pc
+// args :   cur
+// use :    update pc for move forward in memory
 int update_pc(champ_t *cur)
 {
     cur->pc += 1;

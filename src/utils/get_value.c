@@ -9,6 +9,9 @@
 #include "op.h"
 #include <stdio.h>
 
+// name :   get_value
+// args :   type, arg, cur, buffer
+// use :    common function to get value at int to return
 int get_value(int type, void *arg, champ_t *cur, unsigned char *buffer)
 {
     int r = 0;

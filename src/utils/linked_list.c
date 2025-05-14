@@ -9,15 +9,23 @@
 #include "corewar.h"
 #include "op.h"
 
-champ_t *find_node(corewar_t *prog, int id_to_find)
+// name :   find_node
+// args :   prog, id_to_find, opt
+// use :    finc champ with option
+champ_t *find_node(corewar_t *prog, int id_to_find, int opt)
 {
     for (champ_t *tmp = prog->champions; tmp; tmp = tmp->next) {
-        if (tmp->id == id_to_find)
+        if (opt == 1 && tmp->child == 0 && tmp->id == id_to_find)
+            return tmp;
+        if (opt == 0 && tmp->id == id_to_find)
             return tmp;
     }
     return NULL;
 }
 
+// name :   update_removed
+// args :   prev, head, tmp, corewar
+// use :    update champ removed to next
 static void update_removed(champ_t **prev, champ_t **head,
     champ_t **tmp, corewar_t *corewar)
 {
@@ -32,6 +40,9 @@ static void update_removed(champ_t **prev, champ_t **head,
     return;
 }
 
+// name :   remove_champion
+// args :   head, id, corewar
+// use :    remove champion if dead
 void remove_champion(champ_t **head, int id, corewar_t *corewar)
 {
     champ_t *tmp = *head;

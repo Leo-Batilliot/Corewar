@@ -8,6 +8,9 @@
 #include "corewar.h"
 #include "op.h"
 
+// name :   xor_cmd
+// args :   prog, cur, buffer
+// use :    command xor (or exclusif)
 int xor_cmd(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);

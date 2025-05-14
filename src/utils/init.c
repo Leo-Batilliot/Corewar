@@ -9,7 +9,10 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-champ_t *init_champion(int id, flags_t *flags)
+// name :   init_champion
+// args :   id, flags, prog
+// use :    int champion in new list
+champ_t *init_champion(int id, flags_t *flags, corewar_t *prog)
 {
     champ_t *champion = malloc(sizeof(champ_t));
 
@@ -21,13 +24,21 @@ champ_t *init_champion(int id, flags_t *flags)
     champion->rem = 0;
     champion->carry = 0;
     champion->nbr_live = 0;
+    champion->child = 0;
     champion->pos = flags->address;
     champion->id = flags->id != -1 ? flags->id : id;
+    champion->unique_id = prog->cur_id;
+    prog->cur_id++;
+    for (int i = 0; i < MAX_ARGS_NUMBER; i++)
+        champion->type[i] = 0;
     champion->code = NULL;
     champion->next = NULL;
     return champion;
 }
 
+// name :   init_main_struct
+// args :   void
+// use :    int structure value at 0 or NULL
 corewar_t *init_main_struct(void)
 {
     corewar_t *main_struct = malloc(sizeof(corewar_t));
@@ -38,10 +49,14 @@ corewar_t *init_main_struct(void)
     main_struct->cycle_alive = 0;
     main_struct->last_alive = 0;
     main_struct->nb_robot = 0;
+    main_struct->cur_id = 0;
     main_struct->dump = -1;
     return main_struct;
 }
 
+// name :   init_flags
+// args :   array
+// use :    function to init flags
 flags_t *init_flags(char **array)
 {
     flags_t *flags = malloc(sizeof(flags_t));

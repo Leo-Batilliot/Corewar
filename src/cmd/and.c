@@ -9,6 +9,9 @@
 #include "op.h"
 #include <stdlib.h>
 
+// name :   and_cmd
+// args :   prog, cur, buffer
+// use :    cmd and
 int and_cmd(corewar_t *prog, champ_t *cur, unsigned char *buffer)
 {
     void **args = get_args(cur, buffer);
