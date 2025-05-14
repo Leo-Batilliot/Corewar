@@ -46,7 +46,6 @@ champ_t *new_champ(corewar_t *prog, champ_t *cur, int new_addr)
     update_id(cur, new_robot, new_addr);
     my_strcpy(new_robot->prog_name, cur->prog_name);
     new_robot->rem = cur->rem;
-    new_robot->unique_id = prog->cur_id;
     prog->cur_id++;
     for (int i = 0; i < MAX_ARGS_NUMBER; i++)
         new_robot->type[i] = cur->type[i];

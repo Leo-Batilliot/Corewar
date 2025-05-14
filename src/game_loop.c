@@ -70,7 +70,7 @@ int execute_each_champ(champ_t **champion, unsigned char *buffer,
         return 0;
     if ((*champion)->status == 0) {
         if (loop_type((*champion), buffer))
-            return 1;
+            return 0;
     }
     exec_cmd(*champion, corewar, buffer);
     next = (*champion)->next;
@@ -84,24 +84,19 @@ int execute_each_champ(champ_t **champion, unsigned char *buffer,
 // use :    check the condition if is the enf of the game
 static int end(corewar_t *corewar)
 {
-    if (corewar->nb_robot <= 1) {
-        mini_printf(1, "The player %i", corewar->champions->registre[0]);
-        mini_printf(1, "(%s)has won.\n", corewar->champions->prog_name);
-        return 1;
-    }
-    return 0;
-}
+    int id = 0;
 
-// name :   update_next
-// args :   save_next, champ
-// use :    update next for list
-static int update_next(champ_t **champ)
-{
-    if ((*champ)->state != 0) {
-        (*champ) = (*champ)->next;
+    if (!(corewar->champions)) {
+        mini_printf(1, "No player has won. It's a draw.\n");
         return 1;
     }
-    return 0;
+    id = corewar->champions->id;
+    for (champ_t *head = corewar->champions; head; head = head->next)
+        if (head->id != id)
+            return 0;
+    mini_printf(1, "The player %i", corewar->champions->registre[0]);
+    mini_printf(1, "(%s)has won.\n", corewar->champions->prog_name);
+    return 1;
 }
 
 // name :   loop_champ
@@ -109,14 +104,12 @@ static int update_next(champ_t **champ)
 // use :    loop each champ
 int loop_champ(corewar_t *corewar, unsigned char *buffer)
 {
-    champ_t *champ = corewar->champions;
-
-    while (champ) {
-        if (update_next(&champ))
+    for (champ_t *champ = corewar->champions; champ;) {
+        if (champ->state != 0) {
+            champ = champ->next;
             continue;
+        }
         execute_each_champ(&champ, buffer, corewar);
-        if (end(corewar))
-            return 1;
     }
     return 0;
 }
@@ -157,7 +150,8 @@ int game_loop(corewar_t *corewar, unsigned char *buffer)
 {
     corewar->cycle_alive = CYCLE_TO_DIE;
     for (int cycle = 0; cycle >= 0; cycle++) {
-        if (loop_champ(corewar, buffer))
+        loop_champ(corewar, buffer);
+        if (end(corewar))
             return 0;
         reset_cycle(corewar);
         corewar->cycle_alive--;

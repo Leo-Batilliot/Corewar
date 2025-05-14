@@ -94,8 +94,7 @@ static int invalid_champ_code(FILE *fd, champ_t *champion)
 // use :    check file content for add robot
 static int handle_file_content(FILE *fd, corewar_t *prog, flags_t *flags)
 {
-    static int id = 1;
-    champ_t *champion = init_champion(id, flags, prog);
+    champ_t *champion = init_champion(flags, prog);
 
     if (!champion)
         return 84;
@@ -107,7 +106,6 @@ static int handle_file_content(FILE *fd, corewar_t *prog, flags_t *flags)
         return free_champion(champion) + 84;
     }
     add_to_end(prog, champion);
-    id = champion->id + 1;
     return 0;
 }
 

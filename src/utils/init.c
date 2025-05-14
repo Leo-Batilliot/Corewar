@@ -9,10 +9,52 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+// name :   available
+// args :   an id, corewar main struct
+// use :    return 1 if the id is available 0 if not
+static int available(int id, corewar_t *corewar)
+{
+    if (!corewar->champions)
+        return 1;
+    for (champ_t *head = corewar->champions; head; head = head->next)
+        if (head->id == id)
+            return 0;
+    return 1;
+}
+
+// name :   first_available
+// args :   corewar main struct
+// use :    return the first available id 
+static int first_available(corewar_t *corewar)
+{
+    for (int res = 1; res < 1000; res++) {
+        if (available(res, corewar))
+            return res;
+    }
+    return 1;
+}
+
+// name :   get_id
+// args :   corewar main struct, id if -n is used
+// use :    get the corresponding id (or the first available if its taken)
+static int get_id(corewar_t *corewar, int flag_id)
+{
+    if (!corewar->champions)
+        return flag_id == -1 ? 1 : flag_id;
+    if (flag_id != -1) {
+        if (available(flag_id, corewar))
+            return flag_id;
+        return first_available(corewar);
+    }
+    if (available(corewar->nb_robot + 1, corewar))
+        return corewar->nb_robot + 1;
+    return first_available(corewar);      
+}
+
 // name :   init_champion
-// args :   id, flags, prog
+// args :   id, flags, corewar
 // use :    int champion in new list
-champ_t *init_champion(int id, flags_t *flags, corewar_t *prog)
+champ_t *init_champion(flags_t *flags, corewar_t *corewar)
 {
     champ_t *champion = malloc(sizeof(champ_t));
 
@@ -26,9 +68,9 @@ champ_t *init_champion(int id, flags_t *flags, corewar_t *prog)
     champion->nbr_live = 0;
     champion->child = 0;
     champion->pos = flags->address;
-    champion->id = flags->id != -1 ? flags->id : id;
-    champion->unique_id = prog->cur_id;
-    prog->cur_id++;
+    champion->id = get_id(corewar, flags->id);
+    mini_printf(1, "CHAMPION ID : [%i]\n", champion->id);
+    corewar->cur_id++;
     for (int i = 0; i < MAX_ARGS_NUMBER; i++)
         champion->type[i] = 0;
     champion->code = NULL;

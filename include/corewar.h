@@ -37,7 +37,6 @@ typedef struct champ_s {
     int child;
     int advance_pc;
     int registre[REG_NUMBER];
-    int unique_id;
     int state;
     args_type_t type[MAX_ARGS_NUMBER];
     struct champ_s *next;
@@ -110,7 +109,7 @@ unsigned int swap_end_color_4(unsigned int num);
 /*    INIT    */
 corewar_t *init_main_struct(void);
 flags_t *init_flags(char **);
-champ_t *init_champion(int, flags_t *, corewar_t *);
+champ_t *init_champion(flags_t *, corewar_t *);
 
 /*    FREE    */
 int free_champion(champ_t *);
