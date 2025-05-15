@@ -77,6 +77,23 @@ champ_t *init_champion(flags_t *flags, corewar_t *corewar)
     return champion;
 }
 
+static int init_cycles(corewar_t *main_struct)
+{
+    main_struct->index = malloc(sizeof(int) * (MEM_SIZE + 1));
+    if (!main_struct->index)
+        return 1;
+    for (int i = 0; i < MEM_SIZE; i++)
+        main_struct->index[i] = 0;
+    main_struct->index[MEM_SIZE] = -1;
+    main_struct->sim = malloc(sizeof(simulation_t));
+    if (!main_struct->sim) {
+        my_free(main_struct->index);
+        return 1;
+    }
+    main_struct->sim->list = NULL;
+    return 0;
+}
+
 // name :   init_main_struct
 // args :   void
 // use :    int structure value at 0 or NULL
@@ -92,6 +109,10 @@ corewar_t *init_main_struct(void)
     main_struct->nb_robot = 0;
     main_struct->cur_id = 0;
     main_struct->dump = -1;
+    if (init_cycles(main_struct)) {
+        my_free(main_struct);
+        return NULL;
+    }
     return main_struct;
 }
 
