@@ -50,9 +50,9 @@ Dans ce fichier vous devez créer un petit code dans un language très simple, e
 
 #
 .name "Abel"
-	.comment "L'amer noir."
+.comment "L'amer noir."
 
-	sti r1, %:hi, %1
+sti r1, %:hi, %1
 
 hi:	live %1
 	ld %0, r3
@@ -107,4 +107,4 @@ type_de_fonction nom_de_fonction (arguments)
 ###
 MADE BY:
 Gabin Wilson
-Léo Bat
+Léo Batillot
