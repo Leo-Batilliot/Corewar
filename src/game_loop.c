@@ -91,6 +91,7 @@ int execute_each_champ(champ_t **champion, unsigned char *buffer,
 static int end(corewar_t *corewar)
 {
     int count = 0;
+    champ_t *winner = NULL;
 
     for (champ_t *head = corewar->champions; head; head = head->next) {
         if (head->child == 0)
@@ -102,8 +103,9 @@ static int end(corewar_t *corewar)
     }
     if (count > 1)
         return 0;
-    mini_printf(1, "The player %i", corewar->champions->registre[0]);
-    mini_printf(1, "(%s)has won.\n", corewar->champions->prog_name);
+    winner = find_parent(corewar);
+    mini_printf(1, "The player %i", winner->registre[0]);
+    mini_printf(1, "(%s)has won.\n", winner->prog_name);
     return 1;
 }
 
