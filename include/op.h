@@ -55,8 +55,8 @@ typedef struct header_s {
     char comment[COMMENT_LENGTH + 1];
 } header_t;
 
-    #define CYCLE_TO_DIE 700
+    #define CYCLE_TO_DIE 1536
     #define CYCLE_DELTA 5
-    #define NBR_LIVE 10
+    #define NBR_LIVE 40
 
 #endif
