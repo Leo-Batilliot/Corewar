@@ -32,7 +32,7 @@ int sti(corewar_t *prog, champ_t *cur, unsigned char *buffer)
     (void)prog;
     if (!args)
         return 84;
-    dst = *((char *)args[0]);
+    dst = get_value(cur->type[0], args[0], cur, buffer);
     val_1 = get_value(cur->type[1], args[1], cur, buffer);
     val_2 = get_value(cur->type[2], args[2], cur, buffer);
     addr = (cur->pc + (val_1 + val_2) % IDX_MOD) % MEM_SIZE;
