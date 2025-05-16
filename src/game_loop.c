@@ -90,16 +90,18 @@ int execute_each_champ(champ_t **champion, unsigned char *buffer,
 // use :    check the condition if is the enf of the game
 static int end(corewar_t *corewar)
 {
-    int id = 0;
+    int count = 0;
 
-    if (!(corewar->champions)) {
+    for (champ_t *head = corewar->champions; head; head = head->next) {
+        if (head->child == 0)
+            count++;
+    }
+    if (!(corewar->champions) || count == 0) {
         mini_printf(1, "No player has won. It's a draw.\n");
         return 1;
     }
-    id = corewar->champions->id;
-    for (champ_t *head = corewar->champions; head; head = head->next)
-        if (head->id != id)
-            return 0;
+    if (count > 1)
+        return 0;
     mini_printf(1, "The player %i", corewar->champions->registre[0]);
     mini_printf(1, "(%s)has won.\n", corewar->champions->prog_name);
     return 1;
