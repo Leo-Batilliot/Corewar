@@ -11,7 +11,7 @@
 
 // name :   find_node
 // args :   prog, id_to_find, opt
-// use :    finc champ with option
+// use :    find champ with option
 champ_t *find_node(corewar_t *prog, int id_to_find, int opt)
 {
     for (champ_t *tmp = prog->champions; tmp; tmp = tmp->next) {
@@ -20,6 +20,17 @@ champ_t *find_node(corewar_t *prog, int id_to_find, int opt)
         if (opt == 0 && tmp->id == id_to_find)
             return tmp;
     }
+    return NULL;
+}
+
+// name :   find_parent
+// args :   prog
+// use :    find last champ
+champ_t *find_parent(corewar_t *prog)
+{
+    for (champ_t *cur = prog->champions; cur; cur = cur->next)
+        if (cur->child == 0)
+            return cur;
     return NULL;
 }
 

@@ -36,12 +36,12 @@ int watch_health(champ_t *champion, corewar_t *corewar)
     if (champion->nbr_live >= NBR_LIVE && corewar->cycle_alive > 0) {
         champion->state = 2;
         champion->nbr_live = 0;
-        return 0;
+        return 1;
     }
     if (corewar->cycle_alive <= 0 && champion->nbr_live > 0) {
         champion->state = 1;
         champion->nbr_live = 0;
-        return 0;
+        return 1;
     }
     return 0;
 }
@@ -66,8 +66,14 @@ int execute_each_champ(champ_t **champion, unsigned char *buffer,
 {
     champ_t *next = NULL;
 
-    if (update_cycle(*champion))
+    if (update_cycle(*champion)) {
+        next = (*champion)->next;
+        if (watch_health(*champion, corewar)) {
+            *champion = next;
+            return 0;
+        }
         return 1;
+    }
     if ((*champion)->status == 0) {
         if (loop_type((*champion), buffer))
             return 1;
@@ -84,18 +90,22 @@ int execute_each_champ(champ_t **champion, unsigned char *buffer,
 // use :    check the condition if is the enf of the game
 static int end(corewar_t *corewar)
 {
-    int id = 0;
+    int count = 0;
+    champ_t *winner = NULL;
 
-    if (!(corewar->champions)) {
+    for (champ_t *head = corewar->champions; head; head = head->next) {
+        if (head->child == 0)
+            count++;
+    }
+    if (!(corewar->champions) || count == 0) {
         mini_printf(1, "No player has won. It's a draw.\n");
         return 1;
     }
-    id = corewar->champions->id;
-    for (champ_t *head = corewar->champions; head; head = head->next)
-        if (head->id != id)
-            return 0;
-    mini_printf(1, "The player %i", corewar->champions->registre[0]);
-    mini_printf(1, "(%s)has won.\n", corewar->champions->prog_name);
+    if (count > 1)
+        return 0;
+    winner = find_parent(corewar);
+    mini_printf(1, "The player %i", winner->id);
+    mini_printf(1, "(%s)has won.\n", winner->prog_name);
     return 1;
 }
 

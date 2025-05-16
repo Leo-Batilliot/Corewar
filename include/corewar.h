@@ -133,6 +133,7 @@ int handle_flags(flags_t *);
 int parse_champion_file(corewar_t *, flags_t *);
 int update_dir(champ_t *cur);
 int check_array(champ_t *cur);
+champ_t *find_parent(corewar_t *);
 champ_t *find_node(corewar_t *, int, int);
 void remove_champion(champ_t **, int, corewar_t *);
 int read_mem(unsigned char *, int, int);
