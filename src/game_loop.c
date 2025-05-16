@@ -104,7 +104,7 @@ static int end(corewar_t *corewar)
     if (count > 1)
         return 0;
     winner = find_parent(corewar);
-    mini_printf(1, "The player %i", winner->registre[0]);
+    mini_printf(1, "The player %i", winner->id);
     mini_printf(1, "(%s)has won.\n", winner->prog_name);
     return 1;
 }
