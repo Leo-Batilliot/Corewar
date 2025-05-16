@@ -1,7 +1,7 @@
 # Corewar
 
 ## Description
-Le principe du projet COREWAR est de compiler plusieurs fichier, qui s'apparentent à des robots dans une arène.
+Le principe du projet COREWAR est de simulier une arène, ou les robots doivent s'affronter.
 Ce projet a été réalisé en C, en respectant les contraintes imposées par les normes d'EPITECH et les attentes du projet.  
 
 ## Compilation
@@ -107,4 +107,4 @@ type_de_fonction nom_de_fonction (arguments)
 ###
 MADE BY:
 Gabin Wilson
-Léo Batillot
+Léo Batilliot
