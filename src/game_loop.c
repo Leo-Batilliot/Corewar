@@ -67,10 +67,10 @@ int execute_each_champ(champ_t **champion, unsigned char *buffer,
     champ_t *next = NULL;
 
     if (update_cycle(*champion))
-        return 0;
+        return 1;
     if ((*champion)->status == 0) {
         if (loop_type((*champion), buffer))
-            return 0;
+            return 1;
     }
     exec_cmd(*champion, corewar, buffer);
     next = (*champion)->next;
@@ -109,7 +109,8 @@ int loop_champ(corewar_t *corewar, unsigned char *buffer)
             champ = champ->next;
             continue;
         }
-        execute_each_champ(&champ, buffer, corewar);
+        if (execute_each_champ(&champ, buffer, corewar) == 1)
+            champ = champ->next;
     }
     return 0;
 }

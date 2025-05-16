@@ -28,7 +28,7 @@ int parse_args_types(int *i, champ_t *cur, unsigned char *buffer)
 // use :    check cmd with one arg
 static int cmd_one_arg(int *i, champ_t *cur)
 {
-    char *array[] = {"live", "zjump", "fork", "lfork"};
+    char *array[] = {"live", "zjmp", "fork", "lfork"};
 
     for (int k = 0; k < 4; k++) {
         if (!my_strcmp(op_tab[(*i)].mnemonique, array[k])) {

@@ -21,8 +21,9 @@ int zjump(corewar_t *prog, champ_t *cur, unsigned char *buffer)
         return 84;
     index = get_value(cur->type[0], args[0], cur, buffer);
     if (cur->carry == 1) {
-        cur->pc = (cur->pc + (index % IDX_MOD));
+        cur->pc = (cur->pc + index % IDX_MOD) % MEM_SIZE;
         cur->advance_pc = 0;
+        cur->status = 0;
     } else
         cur->advance_pc = 1;
     return free_array(args);

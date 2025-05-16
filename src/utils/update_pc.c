@@ -13,7 +13,7 @@
 // use :    check if is dir
 int check_array(champ_t *cur)
 {
-    char *array[] = {"zjump", "ldi", "sti", "fork", "lldi", "lfork"};
+    char *array[] = {"zjmp", "ldi", "sti", "fork", "lldi", "lfork"};
 
     for (int i = 0; i < 6; i++)
         if (!my_strcmp(array[i], op_tab[cur->rem].mnemonique))
