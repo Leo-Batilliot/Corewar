@@ -36,12 +36,12 @@ int watch_health(champ_t *champion, corewar_t *corewar)
     if (champion->nbr_live >= NBR_LIVE && corewar->cycle_alive > 0) {
         champion->state = 2;
         champion->nbr_live = 0;
-        return 0;
+        return 1;
     }
     if (corewar->cycle_alive <= 0 && champion->nbr_live > 0) {
         champion->state = 1;
         champion->nbr_live = 0;
-        return 0;
+        return 1;
     }
     return 0;
 }
@@ -66,8 +66,14 @@ int execute_each_champ(champ_t **champion, unsigned char *buffer,
 {
     champ_t *next = NULL;
 
-    if (update_cycle(*champion))
+    if (update_cycle(*champion)) {
+        next = (*champion)->next;
+        if (watch_health(*champion, corewar)) {
+            *champion = next;
+            return 0;
+        }
         return 1;
+    }
     if ((*champion)->status == 0) {
         if (loop_type((*champion), buffer))
             return 1;
