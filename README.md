@@ -34,7 +34,7 @@ Avant de compiler le projet, assurez-vous d'avoir les outils suivants installés
 
 ### Exemple d'utilisation
 
-Après avoir compilé le projet, vous pouvez lancer 42sh en exécutant la commande `./corewar [options] file1.cor [file2.cor ...]`
+Après avoir compilé le projet, vous pouvez lancer corewar en exécutant la commande `./corewar [options] file1.cor [file2.cor ...]`
 Vous avez à disponibilités plusieurs flags possible:
 
 -dump : affiche la mémoire au bout de N cycles
