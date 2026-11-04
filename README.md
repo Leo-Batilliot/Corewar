@@ -1,5 +1,7 @@
 # Corewar
 
+![Demo](docs/demo.gif)
+
 ## Description
 Le principe du projet COREWAR est de simulier une arène, ou les robots doivent s'affronter.
 Ce projet a été réalisé en C, en respectant les contraintes imposées par les normes d'EPITECH et les attentes du projet.  
